@@ -1,0 +1,11 @@
+/bin
+/obj
+.DS_Store
+nupkg/
+.vscode/
+bin/
+obj/
+Debug/
+bin
+obj
+obj/Debug
