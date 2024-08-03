@@ -9,8 +9,8 @@ public class Customer
 
     public string Id { get; set; }
     public string? FirstName { get; set; }
-    public string? lastName { get; set; }
-    public string? phone { get; set; }
-    public DateTime birthDate { get; set; }
+    public string? LastName { get; set; }
+    public string? Phone { get; set; }
+    public DateTime BirthDate { get; set; }
 }
 

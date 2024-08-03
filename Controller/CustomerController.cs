@@ -10,6 +10,27 @@ public class CustomerController : ControllerBase
         this.repository = repository;
     }
 
+    [HttpPost]
+    [Route("api/customers")]
+    public void addCustomer([FromBody] Customer customer)
+    {
+        repository.AddCustomer(customer);
+    }
+
+    [HttpPut]
+    [Route("api/customers")]
+    public void editCustomer([FromBody] Customer customer)
+    {
+        repository.EditCustomer(customer);
+    }
+
+    [HttpDelete]
+    [Route("api/customers/{id}")]
+    public void deleteCustomer(string id)
+    {
+        repository.DeleteCustomer(id);
+    }
+
     [HttpGet]
     [Route("api/customers/name")]
     public IEnumerable<Customer> GetCustomersOrderByName()

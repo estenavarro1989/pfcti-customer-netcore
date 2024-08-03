@@ -4,3 +4,29 @@ GET http://localhost:5243/api/customers/name
 GET http://localhost:5243/api/customers/id
 ###
 GET http://localhost:5243/api/customers/birthDate
+###
+POST http://localhost:5243/api/customers
+Content-Type: application/json
+
+{
+    "id": "120",
+    "firstName": "Alejandro",
+    "lastName": "Navarro",
+    "phone": "+50683838383",
+    "birthDate": "1989-04-18"
+}
+
+### Edit Customer
+PUT http://localhost:5243/api/customers
+Content-Type: application/json
+
+{
+    "id": "120",
+    "firstName": "Alejandro",
+    "lastName": "Navarro Sanchez",
+    "phone": "+50683838383",
+    "birthDate": "1989-04-18"
+}
+
+### Delete Customer
+DELETE http://localhost:5243/api/customers/120
