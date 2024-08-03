@@ -2,8 +2,15 @@ using System.ComponentModel.DataAnnotations;
 
 public class Customer
 {
-    public int Id { get; set; }
+    public Customer(string id)
+    {
+        Id = id;
+    }
 
-    [Required]
-    public required string Title { get; set; }
+    public string Id { get; set; }
+    public string? FirstName { get; set; }
+    public string? lastName { get; set; }
+    public string? phone { get; set; }
+    public DateTime birthDate { get; set; }
 }
+

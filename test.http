@@ -1,0 +1,6 @@
+###
+GET http://localhost:5243/api/customers/name
+###
+GET http://localhost:5243/api/customers/id
+###
+GET http://localhost:5243/api/customers/birthDate
