@@ -1,0 +1,6 @@
+@pfcti_customer_netcore_HostAddress = http://localhost:5243
+
+GET {{pfcti_customer_netcore_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
