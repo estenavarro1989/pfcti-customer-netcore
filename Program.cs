@@ -13,7 +13,20 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 var Configuration = builder.Configuration;
 builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    if (!builder.Environment.IsDevelopment())
+    {
+        var db = Environment.GetEnvironmentVariable("POSTGRES_DB");
+        var host = Environment.GetEnvironmentVariable("POSTGRES_HOST");
+        var port = Environment.GetEnvironmentVariable("POSTGRES_PORT");
+        var user = Environment.GetEnvironmentVariable("POSTGRES_USER");
+        var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+        connectionString = string.Format(connectionString, host, port, db, user, password);        
+    }
+    options.UseNpgsql(connectionString);
+});
+
 
 
 var app = builder.Build();
@@ -34,7 +47,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

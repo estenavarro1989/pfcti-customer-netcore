@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("pfcti-customer-netcore")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7556ea7f3b4662efeb9d067c1bddcf500f1282e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ccd5159191957db25aa3de1459630f19cf315ae")]
 [assembly: System.Reflection.AssemblyProductAttribute("pfcti-customer-netcore")]
 [assembly: System.Reflection.AssemblyTitleAttribute("pfcti-customer-netcore")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

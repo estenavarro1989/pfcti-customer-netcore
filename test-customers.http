@@ -1,11 +1,8 @@
-###
-GET http://localhost:5243/api/customers/name
-###
-GET http://localhost:5243/api/customers/id
-###
-GET http://localhost:5243/api/customers/birthDate
-###
-POST http://localhost:5243/api/customers
+@base_url = http://localhost:5244/api
+@uri = /customers
+
+### Add Customer
+POST {{base_url}}{{uri}}
 Content-Type: application/json
 
 {
@@ -17,7 +14,7 @@ Content-Type: application/json
 }
 
 ### Edit Customer
-PUT http://localhost:5243/api/customers
+PUT {{base_url}}{{uri}}
 Content-Type: application/json
 
 {
@@ -29,4 +26,13 @@ Content-Type: application/json
 }
 
 ### Delete Customer
-DELETE http://localhost:5243/api/customers/120
+DELETE {{base_url}}{{uri}}/120
+
+### Get Customers order by birth date desc
+GET  {{base_url}}{{uri}}/birthDate
+
+### Get Customers order by id
+GET  {{base_url}}{{uri}}/id
+
+### Get Customers order by name
+GET  {{base_url}}{{uri}}/birthDate
