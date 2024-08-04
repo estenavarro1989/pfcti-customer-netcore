@@ -13,49 +13,56 @@ public class CustomerRepository : ICustomerRepository
 
     public void AddCustomer(Customer customer)
     {
-        using (var conn = new NpgsqlConnection(_dbContext.Database.GetConnectionString()))
+        try
         {
-            conn.Open();
-            using (var command = new NpgsqlCommand("create_customer", conn))
+            using (var conn = new NpgsqlConnection(_dbContext.Database.GetConnectionString()))
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add(new NpgsqlParameter()
+                conn.Open();
+                using (var command = new NpgsqlCommand("create_customer", conn))
                 {
-                    ParameterName = "p_id",
-                    NpgsqlDbType = NpgsqlDbType.Varchar,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.Id
-                });
-                command.Parameters.Add(new NpgsqlParameter()
-                {
-                    ParameterName = "p_first_name",
-                    NpgsqlDbType = NpgsqlDbType.Varchar,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.FirstName
-                });
-                command.Parameters.Add(new NpgsqlParameter()
-                {
-                    ParameterName = "p_last_name",
-                    NpgsqlDbType = NpgsqlDbType.Varchar,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.LastName
-                });
-                command.Parameters.Add(new NpgsqlParameter()
-                {
-                    ParameterName = "p_phone",
-                    NpgsqlDbType = NpgsqlDbType.Varchar,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.Phone
-                });
-                command.Parameters.Add(new NpgsqlParameter()
-                {
-                    ParameterName = "p_birth_date",
-                    NpgsqlDbType = NpgsqlDbType.Date,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.BirthDate
-                });
-                command.ExecuteNonQuery();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_id",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.Id
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_first_name",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.FirstName
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_last_name",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.LastName
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_phone",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.Phone
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_birth_date",
+                        NpgsqlDbType = NpgsqlDbType.Date,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.BirthDate
+                    });
+                    command.ExecuteNonQuery();
+                }
             }
+        }
+        catch (Exception e)
+        {
+            throw new InternalServerErrorException(e.Message);
         }
     }
 

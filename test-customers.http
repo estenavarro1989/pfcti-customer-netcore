@@ -1,4 +1,4 @@
-@base_url = http://localhost:5244/api
+@base_url = http://localhost:5243/api
 @uri = /customers
 
 ### Add Customer
@@ -6,7 +6,7 @@ POST {{base_url}}{{uri}}
 Content-Type: application/json
 
 {
-    "id": "120",
+    "id": "03",
     "firstName": "Alejandro",
     "lastName": "Navarro",
     "phone": "+50683838383",
@@ -39,3 +39,47 @@ GET  {{base_url}}{{uri}}/id
 
 ### Get Customers order by name
 GET  {{base_url}}{{uri}}/birthDate
+
+### Add Customer without id
+POST {{base_url}}{{uri}}
+Content-Type: application/json
+
+{
+    "firstName": "Alejandro",
+    "lastName": "Navarro",
+    "phone": "+50683838383",
+    "birthDate": "1989-04-18"
+}
+
+### Add Customer with id length more than 50
+POST {{base_url}}{{uri}}
+Content-Type: application/json
+
+{
+    "id": "123456789012345678901234567890123456789012345678901",
+    "firstName": "Alejandro",
+    "lastName": "Navarro",
+    "phone": "+50683838383",
+    "birthDate": "1989-04-18"
+}
+
+### Add Customer with multiple errores
+POST {{base_url}}{{uri}}
+Content-Type: application/json
+
+{
+    "phone": "+50683838383",
+    "birthDate": "2030-04-18"
+}
+
+### Add Customer with id length more than 50
+POST {{base_url}}{{uri}}
+Content-Type: application/json
+
+{
+    "id": "123",
+    "firstName": "Alejandro",
+    "lastName": "Navarro",
+    "phone": "+50612345678901234567890123456789012345678901234567890183838383",
+    "birthDate": "1989-04-18"
+}

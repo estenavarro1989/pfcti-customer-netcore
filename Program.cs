@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+    {
+        options.Filters.Add(new GlobalExceptionFilter());
+    });
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
@@ -22,7 +26,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         var port = Environment.GetEnvironmentVariable("POSTGRES_PORT");
         var user = Environment.GetEnvironmentVariable("POSTGRES_USER");
         var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-        connectionString = string.Format(connectionString, host, port, db, user, password);        
+        connectionString = string.Format(connectionString, host, port, db, user, password);
     }
     options.UseNpgsql(connectionString);
 });

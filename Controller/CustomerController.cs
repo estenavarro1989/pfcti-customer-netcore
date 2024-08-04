@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 [ApiController]
 public class CustomerController : ControllerBase
@@ -12,9 +13,10 @@ public class CustomerController : ControllerBase
 
     [HttpPost]
     [Route("api/customers")]
-    public void addCustomer([FromBody] Customer customer)
+    public IActionResult addCustomer([FromBody] Customer customer)
     {
         repository.AddCustomer(customer);
+        return Ok("Creator created successfully.");
     }
 
     [HttpPut]
@@ -57,6 +59,24 @@ public class CustomerController : ControllerBase
     public IEnumerable<Customer> GetCustomerOrderByBirthDate()
     {
         return repository.GetCustomerOrderByBirthDate();
+    }
+
+    private object CreateValidationErrorResponse(ModelStateDictionary modelState)
+    {
+        var errors = modelState
+            .Where(e => e.Value.Errors.Count > 0)
+            .ToDictionary(
+                e => e.Key,
+                e => e.Value.Errors.Select(x => x.ErrorMessage).ToArray()
+            );
+
+        // Create your custom error response object
+        return new
+        {
+            errorMessage = "Here BadRequest Validation failed.",
+            errorCode = 40002,
+            details = errors  //or you can hide
+        };
     }
 
 }
