@@ -127,6 +127,54 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 
+    public Customer GetCustomerById(string id)
+    {
+        Customer customer = new Customer();
+        using (var conn = new NpgsqlConnection(_dbContext.Database.GetConnectionString()))
+        {
+            conn.Open();
+            using (var trans = conn.BeginTransaction())
+            {
+                using (var command = new NpgsqlCommand("get_customer_by_id", conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_id",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = id
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_result",
+                        NpgsqlDbType = NpgsqlDbType.Refcursor,
+                        Direction = ParameterDirection.InputOutput,
+                        Value = "p_result"
+                    });
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = "fetch all in \"p_result\"";
+                    command.CommandType = CommandType.Text;
+                    var reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var customerId = reader.GetString(reader.GetOrdinal("id"));
+                        customer = new Customer(customerId)
+                        {
+                            FirstName = reader.GetString(reader.GetOrdinal("first_name")),
+                            LastName = reader.GetString(reader.GetOrdinal("last_name")),
+                            Phone = reader.GetString(reader.GetOrdinal("phone")),
+                            BirthDate = (!reader.IsDBNull(reader.GetOrdinal("birth_date"))) ? reader.GetDateTime(reader.GetOrdinal("birth_date")) : default(DateTime)
+                        };
+                    }
+                }
+            }
+        }
+
+        return customer;
+    }
     public IEnumerable<Customer> GetCustomerOrderByName()
     {
         List<Customer> customerList = new List<Customer>();

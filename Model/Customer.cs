@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 public class Customer
 {
     public Customer(string id)
@@ -7,7 +5,9 @@ public class Customer
         Id = id;
     }
 
-    public string Id { get; set; }
+    public Customer() {}
+
+    public string? Id { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? Phone { get; set; }

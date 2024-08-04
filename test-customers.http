@@ -28,6 +28,9 @@ Content-Type: application/json
 ### Delete Customer
 DELETE {{base_url}}{{uri}}/120
 
+### Get Customer By Id
+GET {{base_url}}{{uri}}/120
+
 ### Get Customers order by birth date desc
 GET  {{base_url}}{{uri}}/birthDate
 

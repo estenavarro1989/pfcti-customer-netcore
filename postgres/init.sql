@@ -81,3 +81,14 @@ AS $$
     OPEN p_result FOR SELECT id, first_name, last_name, phone, birth_date FROM customer ORDER BY first_name;
   END;
 $$;
+
+CREATE OR REPLACE PROCEDURE get_customer_by_id (
+  IN p_id varchar,
+  INOUT p_result refcursor
+)
+LANGUAGE plpgsql
+AS $$
+  BEGIN
+    OPEN p_result FOR SELECT id, first_name, last_name, phone, birth_date FROM customer WHERE id = p_id;
+  END;
+$$;

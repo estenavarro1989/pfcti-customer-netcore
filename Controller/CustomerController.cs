@@ -32,6 +32,13 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
+    [Route("api/customers/{id}")]
+    public Customer getCustomerById(string id)
+    {
+        return repository.GetCustomerById(id);
+    }
+
+    [HttpGet]
     [Route("api/customers/name")]
     public IEnumerable<Customer> GetCustomersOrderByName()
     {
