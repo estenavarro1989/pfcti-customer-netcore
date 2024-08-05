@@ -6,11 +6,11 @@ POST {{base_url}}{{uri}}
 Content-Type: application/json
 
 {
-    "id": "07",
-    "firstName": "Alejandro",
-    "lastName": "Navarro",
-    "phone": "+50683838383",
-    "birthDate": "1989-04-18"
+    "id": "123456",
+    "firstName": "Paul",
+    "lastName": "McCartney",
+    "phone": "+50671717171",
+    "birthDate": "1942-06-18"
 }
 
 ### Edit Customer
@@ -68,7 +68,7 @@ Content-Type: application/json
     "birthDate": "2030-04-18"
 }
 
-### Add Customer with id length more than 50
+### Add Customer with phone length more than 50
 POST {{base_url}}{{uri}}
 Content-Type: application/json
 

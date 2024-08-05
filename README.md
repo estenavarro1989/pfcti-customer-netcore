@@ -26,7 +26,7 @@
 
 2. Ejecutar las pruebas desde Postman o utilizando la extensión Rest Cliente de VS Code
 
-* Utilizar el archivo Postman-core e importarlo en el programa Postman
+* Utilizar el archivo `pfcti-customers-netcore.postman_collection.json` e importarlo en el programa Postman
 * Utilizar el archivo test-customers.http directamente desde VS Code utilizando la extensión Rest Client
 
 ### Ejecutar Pruebas Unitarias
