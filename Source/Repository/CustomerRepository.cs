@@ -69,6 +69,8 @@ public class CustomerRepository : ICustomerRepository
     public Customer EditCustomer(string id, Customer newCustomer)
     {        
         Customer customer = GetCustomerById(id);
+        if(string.IsNullOrEmpty(customer.Id)) throw new NoDataFoundException("El cliente que desea editar no existe");
+
         customer.FirstName = String.IsNullOrEmpty(newCustomer.FirstName) ? customer.FirstName : newCustomer.FirstName;
         customer.LastName = String.IsNullOrEmpty(newCustomer.LastName) ? customer.LastName : newCustomer.LastName;
         customer.Phone = String.IsNullOrEmpty(newCustomer.Phone) ? customer.Phone : newCustomer.Phone;

@@ -17,7 +17,7 @@ public class CustomerUnitTest
 
         InsertCustomer customer = new InsertCustomer()
         {
-            Id = "100",
+            Id = "123456789012345678901234567890123456789012345678901",
             FirstName = "John",
             LastName = "Doe",
             Phone = "+50688888888",
@@ -32,7 +32,7 @@ public class CustomerUnitTest
         var data = ((OkObjectResult)result).Value as Customer;
 
         Assert.IsType<OkObjectResult>(result);
-        Assert.Contains("100", data.Id);
+        Assert.Contains("123456789012345678901234567890123456789012345678901", data.Id);
         Assert.Contains("John", data.FirstName);
         Assert.Contains("Doe", data.LastName);
         Assert.Contains("+50688888888", data.Phone);
@@ -61,11 +61,24 @@ public class CustomerUnitTest
         var data = ((OkObjectResult)result).Value as Customer;
 
         Assert.IsType<OkObjectResult>(result);
-        
+
         Assert.Contains("John", data.FirstName);
         Assert.Contains("Doe", data.LastName);
         Assert.Contains("+50688888888", data.Phone);
         Assert.Contains("1/1/0001 12:00:00 AM", data.BirthDate.ToString());
+    }
+
+    [Fact]
+    public void TestDeleteCustomer()
+    {
+
+        Mock<ICustomerRepository> repository = new Mock<ICustomerRepository>();
+
+        var controller = new CustomerController(repository.Object);
+
+        var result = controller.deleteCustomer("100");
+
+        Assert.IsType<OkResult>(result);
     }
 
     [Fact]
@@ -94,6 +107,34 @@ public class CustomerUnitTest
         Assert.Contains("Doe", data.First().LastName);
         Assert.Contains("+50688888888", data.First().Phone);
         Assert.Contains("1/1/0001 12:00:00 AM", data.First().BirthDate.ToString());
+    }
+
+    [Fact]
+    public void TestGetCustomerById()
+    {
+
+        Customer customer = new Customer()
+        {
+            FirstName = "John",
+            LastName = "Doe",
+            Phone = "+50688888888",
+            BirthDate = default(DateTime)
+        };
+
+        Mock<ICustomerRepository> repository = new Mock<ICustomerRepository>();
+        repository.Setup(repo => repo.GetCustomerById("100")).Returns(customer);
+
+        var controller = new CustomerController(repository.Object);
+
+        var result = controller.getCustomerById("100");
+        var data = ((OkObjectResult)result).Value as Customer;
+
+        Assert.IsType<OkObjectResult>(result);
+
+        Assert.Contains("John", data.FirstName);
+        Assert.Contains("Doe", data.LastName);
+        Assert.Contains("+50688888888", data.Phone);
+        Assert.Contains("1/1/0001 12:00:00 AM", data.BirthDate.ToString());
     }
 
     [Fact]

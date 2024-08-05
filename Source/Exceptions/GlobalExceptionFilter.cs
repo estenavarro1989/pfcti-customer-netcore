@@ -15,6 +15,8 @@ public class GlobalExceptionFilter : IExceptionFilter
 
             InternalServerErrorException => StatusCodes.Status500InternalServerError,
 
+            NoDataFoundException => StatusCodes.Status404NotFound,
+
             _ => StatusCodes.Status500InternalServerError
         };
 

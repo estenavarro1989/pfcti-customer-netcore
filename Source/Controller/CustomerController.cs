@@ -29,16 +29,18 @@ public class CustomerController : ControllerBase
 
     [HttpDelete]
     [Route("api/customers/{id}")]
-    public void deleteCustomer(string id)
+    public IActionResult deleteCustomer(string id)
     {
         repository.DeleteCustomer(id);
+        return Ok();
     }
 
     [HttpGet]
     [Route("api/customers/{id}")]
-    public Customer getCustomerById(string id)
+    public IActionResult getCustomerById(string id)
     {
-        return repository.GetCustomerById(id);
+        Customer customer =  repository.GetCustomerById(id);
+        return Ok(customer);
     }
 
     [HttpGet]

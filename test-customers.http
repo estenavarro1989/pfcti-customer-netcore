@@ -14,7 +14,7 @@ Content-Type: application/json
 }
 
 ### Edit Customer
-PUT {{base_url}}{{uri}}/06
+PUT {{base_url}}{{uri}}/00000
 Content-Type: application/json
 
 {
