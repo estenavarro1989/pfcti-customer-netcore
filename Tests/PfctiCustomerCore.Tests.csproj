@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Source\pfcti-customer-netcore.csproj" />
+    <ProjectReference Include="..\Source\PfctiCustomerCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
