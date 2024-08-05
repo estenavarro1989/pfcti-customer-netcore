@@ -36,3 +36,10 @@
 
     `dotnet test`
 
+### Ejecutar desde la Consola
+
+1. Tener desplegado en docker el proyecto con `docker compose up`
+2. Ir a la carpeta App y ejecutar el siguiente comando:
+
+    `dotnet run --property WarningLevel=0`    
+
