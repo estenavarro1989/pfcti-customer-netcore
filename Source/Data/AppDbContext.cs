@@ -1,4 +1,3 @@
-// Data/AppDbContext.cs
 using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext

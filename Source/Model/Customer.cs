@@ -25,4 +25,3 @@ public class Customer
     [DateLessThanOrEqualToToday]
     public DateTime BirthDate { get; set; }
 }
-

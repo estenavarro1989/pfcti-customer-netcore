@@ -1,4 +1,4 @@
-@base_url = http://localhost:5244/api
+@base_url = http://localhost:5243/api
 @uri = /customers
 
 ### Add Customer
@@ -6,7 +6,7 @@ POST {{base_url}}{{uri}}
 Content-Type: application/json
 
 {
-    "id": "03",
+    "id": "06",
     "firstName": "Alejandro",
     "lastName": "Navarro",
     "phone": "+50683838383",

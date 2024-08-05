@@ -16,7 +16,7 @@ public class CustomerController : ControllerBase
     public IActionResult addCustomer([FromBody] Customer customer)
     {
         repository.AddCustomer(customer);
-        return Ok("Creator created successfully.");
+        return Ok(customer);
     }
 
     [HttpPut]
@@ -42,23 +42,23 @@ public class CustomerController : ControllerBase
 
     [HttpGet]
     [Route("api/customers/name")]
-    public IEnumerable<Customer> GetCustomersOrderByName()
+    public IActionResult GetCustomersOrderByName()
     {
-        return repository.GetCustomerOrderByName();
+        return Ok(repository.GetCustomerOrderByName());
     }
 
     [HttpGet]
     [Route("api/customers/id")]
-    public IEnumerable<Customer> GetCustomersOrderById()
+    public IActionResult GetCustomersOrderById()
     {
-        return repository.GetCustomerOrderById();
+        return Ok(repository.GetCustomerOrderById());
     }
 
     [HttpGet]
     [Route("api/customers/birthDate")]
-    public IEnumerable<Customer> GetCustomerOrderByBirthDate()
+    public IActionResult GetCustomerOrderByBirthDate()
     {
-        return repository.GetCustomerOrderByBirthDate();
+        return Ok(repository.GetCustomerOrderByBirthDate());
     }
 
     private object CreateValidationErrorResponse(ModelStateDictionary modelState)
