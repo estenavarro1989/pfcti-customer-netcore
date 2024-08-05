@@ -64,22 +64,4 @@ public class CustomerController : ControllerBase
         return Ok(repository.GetCustomerOrderByBirthDate());
     }
 
-    private object CreateValidationErrorResponse(ModelStateDictionary modelState)
-    {
-        var errors = modelState
-            .Where(e => e.Value.Errors.Count > 0)
-            .ToDictionary(
-                e => e.Key,
-                e => e.Value.Errors.Select(x => x.ErrorMessage).ToArray()
-            );
-
-        // Create your custom error response object
-        return new
-        {
-            errorMessage = "Here BadRequest Validation failed.",
-            errorCode = 40002,
-            details = errors  //or you can hide
-        };
-    }
-
 }

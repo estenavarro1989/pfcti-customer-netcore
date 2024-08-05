@@ -69,59 +69,66 @@ public class CustomerRepository : ICustomerRepository
 
     public Customer EditCustomer(string id, Customer newCustomer)
     {
-        Customer customer = GetCustomerById(id);
-        if (string.IsNullOrEmpty(customer.Id)) throw new NoDataFoundException("El cliente que desea editar no existe");
-
-        customer.FirstName = String.IsNullOrEmpty(newCustomer.FirstName) ? customer.FirstName : newCustomer.FirstName;
-        customer.LastName = String.IsNullOrEmpty(newCustomer.LastName) ? customer.LastName : newCustomer.LastName;
-        customer.Phone = String.IsNullOrEmpty(newCustomer.Phone) ? customer.Phone : newCustomer.Phone;
-        customer.BirthDate = String.IsNullOrEmpty(newCustomer.BirthDate.ToString()) ? customer.BirthDate : newCustomer.BirthDate;
-
-        using (var conn = new NpgsqlConnection(_dbContext.Database.GetConnectionString()))
+        try
         {
-            conn.Open();
-            using (var command = new NpgsqlCommand("update_customer", conn))
+            Customer customer = GetCustomerById(id);
+            if (string.IsNullOrEmpty(customer.Id)) throw new NoDataFoundException("El cliente que desea editar no existe");
+
+            customer.FirstName = String.IsNullOrEmpty(newCustomer.FirstName) ? customer.FirstName : newCustomer.FirstName;
+            customer.LastName = String.IsNullOrEmpty(newCustomer.LastName) ? customer.LastName : newCustomer.LastName;
+            customer.Phone = String.IsNullOrEmpty(newCustomer.Phone) ? customer.Phone : newCustomer.Phone;
+            customer.BirthDate = String.IsNullOrEmpty(newCustomer.BirthDate.ToString()) ? customer.BirthDate : newCustomer.BirthDate;
+
+            using (var conn = new NpgsqlConnection(_dbContext.Database.GetConnectionString()))
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add(new NpgsqlParameter()
+                conn.Open();
+                using (var command = new NpgsqlCommand("update_customer", conn))
                 {
-                    ParameterName = "p_id",
-                    NpgsqlDbType = NpgsqlDbType.Varchar,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.Id
-                });
-                command.Parameters.Add(new NpgsqlParameter()
-                {
-                    ParameterName = "p_first_name",
-                    NpgsqlDbType = NpgsqlDbType.Varchar,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.FirstName
-                });
-                command.Parameters.Add(new NpgsqlParameter()
-                {
-                    ParameterName = "p_last_name",
-                    NpgsqlDbType = NpgsqlDbType.Varchar,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.LastName
-                });
-                command.Parameters.Add(new NpgsqlParameter()
-                {
-                    ParameterName = "p_phone",
-                    NpgsqlDbType = NpgsqlDbType.Varchar,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.Phone
-                });
-                command.Parameters.Add(new NpgsqlParameter()
-                {
-                    ParameterName = "p_birth_date",
-                    NpgsqlDbType = NpgsqlDbType.Date,
-                    Direction = ParameterDirection.Input,
-                    Value = customer.BirthDate
-                });
-                command.ExecuteNonQuery();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_id",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.Id
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_first_name",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.FirstName
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_last_name",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.LastName
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_phone",
+                        NpgsqlDbType = NpgsqlDbType.Varchar,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.Phone
+                    });
+                    command.Parameters.Add(new NpgsqlParameter()
+                    {
+                        ParameterName = "p_birth_date",
+                        NpgsqlDbType = NpgsqlDbType.Date,
+                        Direction = ParameterDirection.Input,
+                        Value = customer.BirthDate
+                    });
+                    command.ExecuteNonQuery();
+                }
             }
+            return customer;
         }
-        return customer;
+        catch (Exception e)
+        {
+            throw new InternalServerErrorException(e.Message);
+        }
     }
 
     public void DeleteCustomer(string id)
@@ -146,51 +153,59 @@ public class CustomerRepository : ICustomerRepository
 
     public Customer GetCustomerById(string id)
     {
-        Customer customer = new Customer();
-        using (var conn = new NpgsqlConnection(_dbContext.Database.GetConnectionString()))
+        try
         {
-            conn.Open();
-            using (var trans = conn.BeginTransaction())
+            Customer customer = new Customer();
+            using (var conn = new NpgsqlConnection(_dbContext.Database.GetConnectionString()))
             {
-                using (var command = new NpgsqlCommand("get_customer_by_id", conn))
+                conn.Open();
+                using (var trans = conn.BeginTransaction())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add(new NpgsqlParameter()
+                    using (var command = new NpgsqlCommand("get_customer_by_id", conn))
                     {
-                        ParameterName = "p_id",
-                        NpgsqlDbType = NpgsqlDbType.Varchar,
-                        Direction = ParameterDirection.Input,
-                        Value = id
-                    });
-                    command.Parameters.Add(new NpgsqlParameter()
-                    {
-                        ParameterName = "p_result",
-                        NpgsqlDbType = NpgsqlDbType.Refcursor,
-                        Direction = ParameterDirection.InputOutput,
-                        Value = "p_result"
-                    });
-                    command.ExecuteNonQuery();
-
-                    command.CommandText = "fetch all in \"p_result\"";
-                    command.CommandType = CommandType.Text;
-                    var reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        var customerId = reader.GetString(reader.GetOrdinal("id"));
-                        customer = new Customer(customerId)
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new NpgsqlParameter()
                         {
-                            FirstName = reader.GetString(reader.GetOrdinal("first_name")),
-                            LastName = reader.GetString(reader.GetOrdinal("last_name")),
-                            Phone = reader.GetString(reader.GetOrdinal("phone")),
-                            BirthDate = (!reader.IsDBNull(reader.GetOrdinal("birth_date"))) ? reader.GetDateTime(reader.GetOrdinal("birth_date")) : default(DateTime)
-                        };
+                            ParameterName = "p_id",
+                            NpgsqlDbType = NpgsqlDbType.Varchar,
+                            Direction = ParameterDirection.Input,
+                            Value = id
+                        });
+                        command.Parameters.Add(new NpgsqlParameter()
+                        {
+                            ParameterName = "p_result",
+                            NpgsqlDbType = NpgsqlDbType.Refcursor,
+                            Direction = ParameterDirection.InputOutput,
+                            Value = "p_result"
+                        });
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = "fetch all in \"p_result\"";
+                        command.CommandType = CommandType.Text;
+                        var reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            var customerId = reader.GetString(reader.GetOrdinal("id"));
+
+                            customer = new Customer(customerId)
+                            {
+                                FirstName = reader.GetString(reader.GetOrdinal("first_name")),
+                                LastName = reader.GetString(reader.GetOrdinal("last_name")),
+                                Phone = reader.GetString(reader.GetOrdinal("phone")),
+                                BirthDate = (!reader.IsDBNull(reader.GetOrdinal("birth_date"))) ? reader.GetDateTime(reader.GetOrdinal("birth_date")) : default(DateTime)
+                            };
+                        }
                     }
                 }
             }
+            if(customer == null || customer.Id == null) throw new NoDataFoundException("El cliente que desea consultar no existe");
+            return customer;
         }
-
-        return customer;
+        catch (Exception e)
+        {
+            throw new InternalServerErrorException(e.Message);
+        }
     }
     public IEnumerable<Customer> GetCustomerOrderByName()
     {
