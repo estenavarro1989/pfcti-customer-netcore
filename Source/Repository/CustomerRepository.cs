@@ -66,8 +66,14 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 
-    public void EditCustomer(Customer customer)
-    {
+    public Customer EditCustomer(string id, Customer newCustomer)
+    {        
+        Customer customer = GetCustomerById(id);
+        customer.FirstName = String.IsNullOrEmpty(newCustomer.FirstName) ? customer.FirstName : newCustomer.FirstName;
+        customer.LastName = String.IsNullOrEmpty(newCustomer.LastName) ? customer.LastName : newCustomer.LastName;
+        customer.Phone = String.IsNullOrEmpty(newCustomer.Phone) ? customer.Phone : newCustomer.Phone;
+        customer.BirthDate = String.IsNullOrEmpty(newCustomer.BirthDate.ToString()) ? customer.BirthDate : newCustomer.BirthDate;
+
         using (var conn = new NpgsqlConnection(_dbContext.Database.GetConnectionString()))
         {
             conn.Open();
@@ -112,6 +118,7 @@ public class CustomerRepository : ICustomerRepository
                 command.ExecuteNonQuery();
             }
         }
+        return customer;
     }
 
     public void DeleteCustomer(string id)

@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -14,8 +15,9 @@ public class CustomerUnitTest
     public void TestAddCustomer()
     {
 
-        Customer customer = new Customer("100")
+        InsertCustomer customer = new InsertCustomer()
         {
+            Id = "100",
             FirstName = "John",
             LastName = "Doe",
             Phone = "+50688888888",
@@ -36,6 +38,34 @@ public class CustomerUnitTest
         Assert.Contains("+50688888888", data.Phone);
         Assert.Contains("1/1/0001 12:00:00 AM", data.BirthDate.ToString());
 
+    }
+
+    [Fact]
+    public void TestEditCustomer()
+    {
+
+        Customer customer = new Customer()
+        {
+            FirstName = "John",
+            LastName = "Doe",
+            Phone = "+50688888888",
+            BirthDate = default(DateTime)
+        };
+
+        Mock<ICustomerRepository> repository = new Mock<ICustomerRepository>();
+        repository.Setup(repo => repo.EditCustomer("100", customer)).Returns(customer);
+
+        var controller = new CustomerController(repository.Object);
+
+        var result = controller.editCustomer("100", customer);
+        var data = ((OkObjectResult)result).Value as Customer;
+
+        Assert.IsType<OkObjectResult>(result);
+        
+        Assert.Contains("John", data.FirstName);
+        Assert.Contains("Doe", data.LastName);
+        Assert.Contains("+50688888888", data.Phone);
+        Assert.Contains("1/1/0001 12:00:00 AM", data.BirthDate.ToString());
     }
 
     [Fact]

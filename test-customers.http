@@ -14,15 +14,11 @@ Content-Type: application/json
 }
 
 ### Edit Customer
-PUT {{base_url}}{{uri}}
+PUT {{base_url}}{{uri}}/06
 Content-Type: application/json
 
 {
-    "id": "120",
-    "firstName": "Alejandro",
-    "lastName": "Navarro Sanchez",
-    "phone": "+50683838383",
-    "birthDate": "1989-04-18"
+    "firstName": "Alejandros"
 }
 
 ### Delete Customer

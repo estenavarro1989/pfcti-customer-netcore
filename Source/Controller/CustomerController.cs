@@ -13,17 +13,18 @@ public class CustomerController : ControllerBase
 
     [HttpPost]
     [Route("api/customers")]
-    public IActionResult addCustomer([FromBody] Customer customer)
+    public IActionResult addCustomer([FromBody] InsertCustomer customer)
     {
         repository.AddCustomer(customer);
         return Ok(customer);
     }
 
     [HttpPut]
-    [Route("api/customers")]
-    public void editCustomer([FromBody] Customer customer)
+    [Route("api/customers/{id}")] 
+    public IActionResult editCustomer(string id, [FromBody] Customer customer)
     {
-        repository.EditCustomer(customer);
+        Customer editCustomer = repository.EditCustomer(id, customer);
+        return Ok(editCustomer);
     }
 
     [HttpDelete]
