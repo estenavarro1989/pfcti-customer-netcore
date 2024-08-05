@@ -2,7 +2,7 @@ services:
   customer:
       container_name: customer-dotnet
       build:
-          dockerfile: Dockerfile
+          dockerfile: Source/Dockerfile
       image: customers-core:latest
       environment:
         - POSTGRES_DB=${POSTGRES_DB}

@@ -5,3 +5,6 @@ nupkg/
 bin/
 Debug/
 bin
+Source/obj
+Tests/obj
+obj/*
