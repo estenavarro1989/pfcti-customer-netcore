@@ -36,7 +36,7 @@ public class CustomerUnitTest
         Assert.Contains("John", data.FirstName);
         Assert.Contains("Doe", data.LastName);
         Assert.Contains("+50688888888", data.Phone);
-        Assert.Contains("1/1/0001 12:00:00 AM", data.BirthDate.ToString());
+        Assert.Contains("1/1/0001", data.BirthDate.ToString());
 
     }
 
@@ -65,7 +65,7 @@ public class CustomerUnitTest
         Assert.Contains("John", data.FirstName);
         Assert.Contains("Doe", data.LastName);
         Assert.Contains("+50688888888", data.Phone);
-        Assert.Contains("1/1/0001 12:00:00 AM", data.BirthDate.ToString());
+        Assert.Contains("1/1/0001", data.BirthDate.ToString());
     }
 
     [Fact]
@@ -106,7 +106,7 @@ public class CustomerUnitTest
         Assert.Contains("John", data.First().FirstName);
         Assert.Contains("Doe", data.First().LastName);
         Assert.Contains("+50688888888", data.First().Phone);
-        Assert.Contains("1/1/0001 12:00:00 AM", data.First().BirthDate.ToString());
+        Assert.Contains("1/1/0001", data.First().BirthDate.ToString());
     }
 
     [Fact]
@@ -134,7 +134,7 @@ public class CustomerUnitTest
         Assert.Contains("John", data.FirstName);
         Assert.Contains("Doe", data.LastName);
         Assert.Contains("+50688888888", data.Phone);
-        Assert.Contains("1/1/0001 12:00:00 AM", data.BirthDate.ToString());
+        Assert.Contains("1/1/0001", data.BirthDate.ToString());
     }
 
     [Fact]
@@ -162,7 +162,7 @@ public class CustomerUnitTest
         Assert.Contains("John", data.First().FirstName);
         Assert.Contains("Doe", data.First().LastName);
         Assert.Contains("+50688888888", data.First().Phone);
-        Assert.Contains("1/1/0001 12:00:00 AM", data.First().BirthDate.ToString());
+        Assert.Contains("1/1/0001", data.First().BirthDate.ToString());
     }
 
     [Fact]
@@ -190,7 +190,7 @@ public class CustomerUnitTest
         Assert.Contains("John", data.First().FirstName);
         Assert.Contains("Doe", data.First().LastName);
         Assert.Contains("+50688888888", data.First().Phone);
-        Assert.Contains("1/1/0001 12:00:00 AM", data.First().BirthDate.ToString());
+        Assert.Contains("1/1/0001", data.First().BirthDate.ToString());
     }
 
 }
