@@ -98,7 +98,7 @@ public class CustomerUnitTest
         repository.Setup(repo => repo.GetCustomerOrderById()).Returns(customers);
 
         var controller = new CustomerController(repository.Object);
-        var result = controller.GetCustomersOrderById();
+        var result = controller.listCustomer("id");
         var data = ((OkObjectResult)result).Value as List<Customer>;
 
         Assert.IsType<OkObjectResult>(result);
@@ -154,7 +154,7 @@ public class CustomerUnitTest
         repository.Setup(repo => repo.GetCustomerOrderByBirthDate()).Returns(customers);
 
         var controller = new CustomerController(repository.Object);
-        var result = controller.GetCustomerOrderByBirthDate();
+        var result = controller.listCustomer("birthDate");
         var data = ((OkObjectResult)result).Value as List<Customer>;
 
         Assert.IsType<OkObjectResult>(result);
@@ -182,7 +182,7 @@ public class CustomerUnitTest
         repository.Setup(repo => repo.GetCustomerOrderByName()).Returns(customers);
 
         var controller = new CustomerController(repository.Object);
-        var result = controller.GetCustomersOrderByName();
+        var result = controller.listCustomer("name");
         var data = ((OkObjectResult)result).Value as List<Customer>;
 
         Assert.IsType<OkObjectResult>(result);

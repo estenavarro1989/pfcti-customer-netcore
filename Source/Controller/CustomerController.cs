@@ -27,6 +27,14 @@ public class CustomerController : ControllerBase
         return Ok(editCustomer);
     }
 
+    [HttpGet]
+    [Route("api/customers/{id}")]
+    public IActionResult getCustomerById(string id)
+    {
+        Customer customer =  repository.GetCustomerById(id);
+        return Ok(customer);
+    }
+    
     [HttpDelete]
     [Route("api/customers/{id}")]
     public IActionResult deleteCustomer(string id)
@@ -36,32 +44,24 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
-    [Route("api/customers/{id}")]
-    public IActionResult getCustomerById(string id)
+    [Route("api/customers")]
+    public IActionResult listCustomer([FromQuery(Name = "orderBy")] string orderBy)
     {
-        Customer customer =  repository.GetCustomerById(id);
-        return Ok(customer);
+        if(orderBy == "birthDate")
+        {
+            return Ok(repository.GetCustomerOrderByBirthDate());
+        } 
+        else if (orderBy == "id")
+        {
+            return Ok(repository.GetCustomerOrderById());
+        }
+        else if (orderBy == "name")
+        {
+            return Ok(repository.GetCustomerOrderByName());
+        }
+        else 
+        {
+            return BadRequest();
+        }
     }
-
-    [HttpGet]
-    [Route("api/customers/name")]
-    public IActionResult GetCustomersOrderByName()
-    {
-        return Ok(repository.GetCustomerOrderByName());
-    }
-
-    [HttpGet]
-    [Route("api/customers/id")]
-    public IActionResult GetCustomersOrderById()
-    {
-        return Ok(repository.GetCustomerOrderById());
-    }
-
-    [HttpGet]
-    [Route("api/customers/birthDate")]
-    public IActionResult GetCustomerOrderByBirthDate()
-    {
-        return Ok(repository.GetCustomerOrderByBirthDate());
-    }
-
 }

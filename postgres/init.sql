@@ -3,7 +3,9 @@ CREATE TABLE customer (
   first_name VARCHAR(20) NOT NULL,
   last_name VARCHAR(20),
   phone VARCHAR(20),
-  birth_date DATE
+  birth_date DATE,
+  created_at TIMESTAMP WITH TIME ZONE,
+  updated_at TIMESTAMP WITH TIME ZONE
 );
 
 CREATE OR REPLACE PROCEDURE create_customer (
@@ -16,7 +18,7 @@ CREATE OR REPLACE PROCEDURE create_customer (
 LANGUAGE plpgsql
 AS $$
   BEGIN
-    INSERT INTO customer VALUES(p_id, p_first_name, p_last_name, p_phone, p_birth_date);
+    INSERT INTO customer VALUES(p_id, p_first_name, p_last_name, p_phone, p_birth_date, NOW());
     COMMIT;
   END;
 $$;
@@ -35,7 +37,8 @@ AS $$
        SET first_name = p_first_name, 
            last_name = p_last_name, 
            phone = p_phone, 
-           birth_date = p_birth_date
+           birth_date = p_birth_date,
+	  	     updated_at = NOW()
      WHERE id = p_id;
     COMMIT;
   END;

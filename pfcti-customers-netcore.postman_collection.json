@@ -77,41 +77,6 @@
 			"response": []
 		},
 		{
-			"name": "Agregar Cliente Fecha incorrecta",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"id\": \"123456\",\n    \"firstName\": \"Paul\",\n    \"lastName\": \"McCartney\",\n    \"phone\": \"+50671717171\",\n    \"birthDate\": \"19420618\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5244/api/customers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5244",
-					"path": [
-						"api",
-						"customers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Agregar Cliente sin campos",
 			"request": {
 				"method": "POST",
@@ -194,7 +159,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"firstName\": \"Paul\",\n    \"lastName\": \"McCartney\",\n    \"phone\": \"+50671717171\",\n    \"birthDate\": \"1942-06-19\"\n}",
+					"raw": "{\n    \"firstName\": \"Paul\",\n    \"lastName\": \"McCartney\",\n    \"phone\": \"+50671717171\",\n    \"birthDate\": \"1932-06-19\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -329,7 +294,7 @@
 			"response": []
 		},
 		{
-			"name": "Consultar Clientes por fecha nacimiento descenciente",
+			"name": "Listar Clientes por fecha nacimiento descenciente",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -352,7 +317,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5244/api/customers/birthDate",
+					"raw": "http://localhost:5244/api/customers?orderBy=birthDate",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -360,15 +325,20 @@
 					"port": "5244",
 					"path": [
 						"api",
-						"customers",
-						"birthDate"
+						"customers"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "birthDate"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Consultar Clientes por nombre",
+			"name": "Listar Clientes por nombre",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -391,7 +361,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5244/api/customers/name",
+					"raw": "http://localhost:5244/api/customers?orderBy=name",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -399,15 +369,20 @@
 					"port": "5244",
 					"path": [
 						"api",
-						"customers",
-						"name"
+						"customers"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "name"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Consultar Clientes por id",
+			"name": "Listar Clientes por id",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -430,7 +405,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5244/api/customers/id",
+					"raw": "http://localhost:5244/api/customers?orderBy=id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -438,8 +413,13 @@
 					"port": "5244",
 					"path": [
 						"api",
-						"customers",
-						"id"
+						"customers"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "id"
+						}
 					]
 				}
 			},

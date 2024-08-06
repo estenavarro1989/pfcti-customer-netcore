@@ -102,7 +102,7 @@ class Api
 
     public static List<Customer> GetCustomersList(string orderParam)
     {
-        string url = baseUrl + "/" + orderParam;
+        string url = baseUrl + "?orderBy=" + orderParam;
         try
         {
             HttpClient client = new HttpClient();
