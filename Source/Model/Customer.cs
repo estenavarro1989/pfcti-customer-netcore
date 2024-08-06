@@ -18,6 +18,7 @@ public class Customer
     public virtual string? LastName { get; set; }
 
     [MaxLength(20, ErrorMessage = "El máximo de caracteres del teléfono es de 20")]
+    [RegularExpression(@"^\+\d{11}$", ErrorMessage = "Formato de teléfono no válido")]
     public string? Phone { get; set; }
     [DateLessThanOrEqualToToday]
     public DateTime? BirthDate { get; set; }

@@ -12,9 +12,9 @@ class Option
             customer.firstName = Console.ReadLine();
             Console.Write($"Apellido del Cliente: ");
             customer.lastName = Console.ReadLine();
-            Console.Write($"Teléfono del Cliente: ");
+            Console.Write($"Teléfono del Cliente (+50688888888): ");
             customer.phone = Console.ReadLine();
-            Console.Write($"Fecha de Nacimiento del Cliente(1990-01-01): ");
+            Console.Write($"Fecha de Nacimiento del Cliente (1990-01-01): ");
             try
             {
                 customer.birthDate = DateTime.Parse(Console.ReadLine());
@@ -48,7 +48,7 @@ class Option
             customer.firstName = Console.ReadLine();
             Console.Write($"Apellido del Cliente: ");
             customer.lastName = Console.ReadLine();
-            Console.Write($"Teléfono del Cliente: ");
+            Console.Write($"Teléfono del Cliente (+50688888888): ");
             customer.phone = Console.ReadLine();
             Console.Write($"Fecha de Nacimiento del Cliente(1990-01-01): ");
             try
